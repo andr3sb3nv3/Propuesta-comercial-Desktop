@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Image as ImageIcon, Type, User, Link as LinkIcon, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Image as ImageIcon, Type, User, Link as LinkIcon, CheckCircle2, Palette } from 'lucide-react';
 
 export default function CreateProposal() {
   const navigate = useNavigate();
@@ -9,7 +9,10 @@ export default function CreateProposal() {
     clientName: '',
     img1: '',
     img2: '',
-    phrase: ''
+    phrase: '',
+    color1: '#0a192f',
+    color2: '#34d399',
+    color3: '#f9fafb'
   });
   const [generatedUrl, setGeneratedUrl] = useState('');
 
@@ -113,6 +116,50 @@ export default function CreateProposal() {
                 />
               </div>
 
+              <div>
+                <label className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-400 mb-2">
+                  <Palette size={14} /> Paleta de Colores del Cliente
+                </label>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="flex flex-col gap-2">
+                    <div className="relative rounded-xl overflow-hidden border border-gray-200 h-12">
+                      <input 
+                        type="color" 
+                        name="color1"
+                        value={formData.color1}
+                        onChange={handleChange}
+                        className="absolute -top-2 -left-2 w-[150%] h-[150%] cursor-pointer"
+                      />
+                    </div>
+                    <span className="text-[10px] font-mono text-gray-400 text-center uppercase">{formData.color1}</span>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <div className="relative rounded-xl overflow-hidden border border-gray-200 h-12">
+                      <input 
+                        type="color" 
+                        name="color2"
+                        value={formData.color2}
+                        onChange={handleChange}
+                        className="absolute -top-2 -left-2 w-[150%] h-[150%] cursor-pointer"
+                      />
+                    </div>
+                    <span className="text-[10px] font-mono text-gray-400 text-center uppercase">{formData.color2}</span>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <div className="relative rounded-xl overflow-hidden border border-gray-200 h-12">
+                      <input 
+                        type="color" 
+                        name="color3"
+                        value={formData.color3}
+                        onChange={handleChange}
+                        className="absolute -top-2 -left-2 w-[150%] h-[150%] cursor-pointer"
+                      />
+                    </div>
+                    <span className="text-[10px] font-mono text-gray-400 text-center uppercase">{formData.color3}</span>
+                  </div>
+                </div>
+              </div>
+
               <button 
                 type="submit"
                 className="w-full bg-emerald-400 text-[#0a192f] font-black uppercase tracking-widest py-4 rounded-xl hover:bg-[#0a192f] hover:text-emerald-400 transition-colors mt-8"
@@ -162,15 +209,19 @@ export default function CreateProposal() {
               <h3 className="text-sm font-black uppercase tracking-widest text-gray-400 mb-6">Vista Previa</h3>
               
               <div className="bg-white border-2 border-dashed border-gray-200 rounded-[2rem] p-8 overflow-hidden relative">
+                {/* Subtle background preview */}
+                <div className="absolute inset-0 opacity-10" style={{ background: `linear-gradient(135deg, ${formData.color1}, ${formData.color2}, ${formData.color3})` }} />
+                <div className="absolute top-0 left-0 w-full h-1" style={{ background: `linear-gradient(to right, ${formData.color1}, ${formData.color2}, ${formData.color3})` }} />
+                
                 {(!formData.clientName && !formData.phrase && !formData.img1 && !formData.img2) ? (
-                  <div className="text-center text-gray-400 py-20">
+                  <div className="text-center text-gray-400 py-20 relative z-10">
                     <p className="font-medium">Completa el formulario para ver la vista previa</p>
                   </div>
                 ) : (
-                  <div className="space-y-8">
+                  <div className="space-y-8 relative z-10">
                     <div className="text-center">
                       <h4 className="text-2xl font-black uppercase italic text-[#0a192f] mb-2">
-                        El futuro de <span className="text-emerald-400">{formData.clientName || '[Cliente]'}</span>
+                        El futuro de <span style={{ color: formData.color2 }}>{formData.clientName || '[Cliente]'}</span>
                       </h4>
                       <p className="text-gray-500 italic font-light">
                         "{formData.phrase || 'Tu frase personalizada aparecerá aquí...'}"
@@ -179,17 +230,21 @@ export default function CreateProposal() {
 
                     <div className="space-y-4">
                       {formData.img1 ? (
-                        <img src={formData.img1} alt="Preview 1" className="w-full h-48 object-contain bg-gray-50 rounded-xl border border-gray-100" />
+                        <div className="p-2 bg-white rounded-xl shadow-sm" style={{ border: `1px solid ${formData.color1}40` }}>
+                          <img src={formData.img1} alt="Preview 1" className="w-full h-48 object-contain rounded-lg" />
+                        </div>
                       ) : (
-                        <div className="w-full h-48 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center text-gray-300">
+                        <div className="w-full h-48 bg-white/50 rounded-xl border border-gray-100 flex items-center justify-center text-gray-300">
                           <ImageIcon size={32} />
                         </div>
                       )}
                       
                       {formData.img2 ? (
-                        <img src={formData.img2} alt="Preview 2" className="w-full h-48 object-contain bg-gray-50 rounded-xl border border-gray-100" />
+                        <div className="p-2 bg-white rounded-xl shadow-sm" style={{ border: `1px solid ${formData.color3}40` }}>
+                          <img src={formData.img2} alt="Preview 2" className="w-full h-48 object-contain rounded-lg" />
+                        </div>
                       ) : (
-                        <div className="w-full h-48 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-center text-gray-300">
+                        <div className="w-full h-48 bg-white/50 rounded-xl border border-gray-100 flex items-center justify-center text-gray-300">
                           <ImageIcon size={32} />
                         </div>
                       )}
