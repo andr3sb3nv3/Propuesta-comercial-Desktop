@@ -750,7 +750,7 @@ export default function Landing() {
 
       {/* WhatsApp Button */}
       <a 
-        href="https://wa.me/your_number_here" 
+        href={`https://wa.me/5491124774256?text=${encodeURIComponent("Hola Atenea Growth!\nMe contacto de " + clientName + ".\nQuería ponerme en contacto con un asesor.")}`}
         target="_blank" 
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-[100] w-14 h-14 rounded-full shadow-xl hover:scale-110 transition-transform overflow-hidden"
