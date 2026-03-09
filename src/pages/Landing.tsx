@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { 
   UserX, Target, ChevronDown, Timer, 
-  Check, Zap, Palette, Rocket 
+  Check, Zap, Palette, Rocket, Hand, ArrowRight
 } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CurtainReveal } from '../components/CurtainReveal';
-import { ConnectAtenea } from '../components/ConnectAtenea';
+import ConectaAtenea from '../components/ConectaAtenea';
 
 // Componente para animar texto letra por letra o palabra por palabra
 const RevealText = ({ text, delay = 0, className = "" }: { text: string, delay?: number, className?: string }) => {
@@ -23,7 +24,73 @@ const RevealText = ({ text, delay = 0, className = "" }: { text: string, delay?:
 
 export default function Landing() {
   const [visibleItems, setVisibleItems] = useState<Record<string, boolean>>({});
+  const [currentExampleIndexPatagon, setCurrentExampleIndexPatagon] = useState(0);
+  const [currentExampleIndexAtenea, setCurrentExampleIndexAtenea] = useState(0);
   const [selectedPlan, setSelectedPlan] = useState('patagon');
+
+  interface Example {
+    title: string;
+    desc?: string;
+    features?: string[];
+  }
+
+  const allianceRoles: { id: string; label: string; title: string; logo?: string; examples: Example[]; bgColor: string; textColor: string; accentColor: string }[] = [
+    {
+      id: 'atenea',
+      label: 'Rol de Atenea',
+      title: 'Atenea genera y escala la demanda.',
+      logo: 'https://raw.githubusercontent.com/andr3sb3nv3/AteneaPNG/refs/heads/main/IMG_0210.png', // Assuming this is the Atenea logo
+      bgColor: 'bg-[#0a192f]',
+      textColor: 'text-white',
+      accentColor: 'text-[#34d399]',
+      examples: [
+        { 
+          title: "Atenea genera y escala la demanda", 
+          features: [
+            "Generamos tráfico de calidad desde Google, Meta y LinkedIn",
+            "Segmentamos y optimizamos para lead calificado",
+            "Diseñamos creatividades y mensajes para proyectos inmobiliarios",
+            "Optimizamos de forma continua con reporting claro",
+            "Aportamos expertise real en vertical inmobiliaria"
+          ]
+        },
+        { title: "Estrategia Digital", desc: "Diseño de funnels de conversión optimizados para el sector inmobiliario." },
+        { title: "Growth & Data", desc: "Análisis de datos para la toma de decisiones basada en resultados reales." }
+      ]
+    },
+    {
+      id: 'patagon',
+      label: 'Rol de Patagon',
+      title: 'CONVERSIÓN + CALIFICACIÓN 24/7',
+      logo: 'https://s.yimg.com/os/es/valora_628/eee9853c1556a5bf4e9c3f9a287e29e6',
+      bgColor: 'bg-[#edd5b1]',
+      textColor: 'text-black',
+      accentColor: 'text-black',
+      examples: [
+        { 
+          title: "PATAGON CONVIERTE ESA DEMANDA EN OPORTUNIDADES REALES", 
+          features: [
+            'Respondemos de forma inmediata 24/7',
+            'Conversamos de manera natural y contextualizada',
+            'Agendamos visitas y reuniones automáticamente'
+          ]
+        },
+        { title: "Venta Nocturna", desc: "Descripción del caso de éxito..." }
+      ]
+    }
+  ];
+
+  const handleNextExample = (roleId: string) => {
+    const role = allianceRoles.find(r => r.id === roleId);
+    if (role && role.examples) {
+      if (roleId === 'patagon') {
+        setCurrentExampleIndexPatagon((prev) => (prev + 1) % role.examples.length);
+      } else if (roleId === 'atenea') {
+        setCurrentExampleIndexAtenea((prev) => (prev + 1) % role.examples.length);
+      }
+    }
+  };
+
   const [scrollProgress, setScrollProgress] = useState(0);
   const [searchParams] = useSearchParams();
 
@@ -168,8 +235,8 @@ export default function Landing() {
   return (
     <>
       <CurtainReveal
-        footer={<ConnectAtenea clientName={clientName} clientColor={clientColor} />}
-        footerClassName="bg-[#0a192f]"
+        footer={<ConectaAtenea />}
+        footerClassName="bg-white"
         containerClassName="bg-white"
       >
         <div className="w-full min-h-screen font-sans text-[#0a192f] overflow-x-hidden selection:bg-client selection:text-client-dark">
@@ -178,7 +245,7 @@ export default function Landing() {
       <section className="relative w-full h-screen flex items-center overflow-hidden bg-[#0a192f]">
         <div 
           className="absolute inset-0 w-full h-full bg-contain bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(https://raw.githubusercontent.com/andr3sb3nv3/Banco-de-im-genes-Atenea/refs/heads/main/Diagrama%20sin%20ti%CC%81tulo.drawio%202.png)` }}
+          style={{ backgroundImage: `url(https://raw.githubusercontent.com/andr3sb3nv3/AteneaPNG/refs/heads/main/Propuesta%20Comercial%20%20Atenea%20%20Patagon%20AI.pdf.png)` }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#0a192f]/60 to-transparent" />
         
@@ -429,31 +496,90 @@ export default function Landing() {
         />
       </section>
 
-      {/* SECCIÓN INTERACTIVA 104 */}
-      <section id="inter104" className="reveal-on-scroll relative w-full overflow-hidden bg-client-dark">
-        <img src={images.img0104} alt="Impact" className="w-full h-auto block opacity-50" />
-        <div className="absolute inset-0 w-full h-full flex flex-col md:flex-row">
-          <div className={`w-full md:w-1/2 flex flex-col justify-center px-8 md:px-[8%] transition-all duration-1000 delay-300 ${visibleItems.inter104 ? 'translate-x-0 opacity-100' : '-translate-x-20 opacity-0'}`}>
-              <h3 className="text-4xl md:text-7xl font-black text-client mb-8 uppercase tracking-tighter italic leading-none">Atenea<br/>Growth</h3>
-              <ul className="space-y-6">
-                {ateneaPoints.map((text, i) => (
-                    <li key={i} className="flex items-start gap-4 text-white text-lg md:text-xl font-bold uppercase tracking-tight">
-                        <span className="w-2 h-2 mt-2 bg-client rounded-full shrink-0" />
-                        {text}
-                    </li>
-                ))}
-              </ul>
-          </div>
-          <div className={`w-full md:w-1/2 flex flex-col justify-center px-8 md:px-[8%] transition-all duration-1000 delay-500 ${visibleItems.inter104 ? 'translate-x-0 opacity-100' : 'translate-x-20 opacity-0'}`}>
-              <h3 className="text-4xl md:text-7xl font-black text-[#0a192f] mb-8 uppercase tracking-tighter italic leading-none">Patagon<br/>AI</h3>
-              <ul className="space-y-6">
-                {patagonPoints.map((text, i) => (
-                    <li key={i} className="flex items-start gap-4 text-[#0a192f] text-lg md:text-xl font-bold uppercase tracking-tight">
-                        <span className="w-2 h-2 mt-2 bg-[#0a192f] rounded-full shrink-0" />
-                        {text}
-                    </li>
-                ))}
-              </ul>
+      {/* SECCIÓN ALIANZA CON PATAGON */}
+      <section className="reveal-on-scroll relative w-full overflow-hidden bg-white py-20">
+        <div className="container mx-auto px-6 md:px-20 lg:px-32">
+          <h2 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter text-[#0a192f] mb-16 text-center whitespace-nowrap">
+            Nuestra Alianza <span className="text-[#34d399]">con Patagón</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {allianceRoles.map((role) => (
+              <div key={role.id} className={`border border-black/10 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden backdrop-blur-sm ${role.bgColor} ${role.textColor}`}>
+                <div className="space-y-8 relative z-10">
+                  <div className="space-y-6">
+                    <div className={`inline-block px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest ${role.id === 'atenea' ? 'bg-white/10 text-white/80' : 'bg-black/10 text-black/80'}`}>
+                      {role.label}
+                    </div>
+                    <h3 className="text-4xl font-black uppercase italic tracking-tighter leading-none">
+                      {role.title}
+                    </h3>
+                  </div>
+                  
+                  <div className="relative mt-4">
+                    {role.examples.length > 1 && (
+                      <div className={`mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-widest ${role.id === 'atenea' ? 'text-white/40' : 'text-black/40'}`}>
+                        <Hand className="w-4 h-4 animate-bounce" />
+                        Deslizar para ver ejemplos
+                      </div>
+                    )}
+                    
+                    <div className="relative min-h-[450px] w-full overflow-hidden rounded-2xl">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={`${role.id}-${role.id === 'patagon' ? currentExampleIndexPatagon : currentExampleIndexAtenea}`}
+                          initial={{ x: 300, opacity: 0 }}
+                          animate={{ x: 0, opacity: 1 }}
+                          exit={{ x: -300, opacity: 0 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                          drag={role.examples.length > 1 ? "x" : false}
+                          dragConstraints={{ left: 0, right: 0 }}
+                          onDragEnd={(_, info) => { if (role.examples.length > 1 && info.offset.x < -50) handleNextExample(role.id); }}
+                          onClick={() => role.examples.length > 1 && handleNextExample(role.id)}
+                          className={`absolute inset-0 p-8 flex flex-col justify-start cursor-pointer select-none border-2 ${role.id === 'atenea' ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'} rounded-2xl backdrop-blur-md`}
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${role.id === 'atenea' ? 'text-white/40' : 'text-black/40'}`}>
+                              {role.id === 'patagon' && currentExampleIndexPatagon === 0 ? 'Información General' : role.id === 'atenea' && currentExampleIndexAtenea === 0 ? 'Información General' : `Ejemplo ${role.id === 'patagon' ? currentExampleIndexPatagon : currentExampleIndexAtenea}`}
+                            </span>
+                            {role.examples.length > 1 && <ArrowRight className="w-4 h-4 opacity-50" />}
+                          </div>
+                          
+                          <h4 className="text-2xl font-black uppercase italic mb-2 tracking-tight leading-tight">
+                            {role.examples[role.id === 'patagon' ? currentExampleIndexPatagon : currentExampleIndexAtenea].title}
+                          </h4>
+                          
+                          {role.examples[role.id === 'patagon' ? currentExampleIndexPatagon : currentExampleIndexAtenea].desc && (
+                            <p className={`text-base font-bold uppercase tracking-wide mb-4 ${role.id === 'atenea' ? 'text-white/80' : 'text-black/80'}`}>
+                              {role.examples[role.id === 'patagon' ? currentExampleIndexPatagon : currentExampleIndexAtenea].desc}
+                            </p>
+                          )}
+
+                          {role.examples[role.id === 'patagon' ? currentExampleIndexPatagon : currentExampleIndexAtenea].features && (
+                            <ul className="space-y-4">
+                              {role.examples[role.id === 'patagon' ? currentExampleIndexPatagon : currentExampleIndexAtenea].features.map((feature, idx) => (
+                                <li key={idx} className={`flex items-start gap-3 text-sm font-light uppercase tracking-tight ${role.id === 'atenea' ? 'text-white/70' : 'text-black/70'}`}>
+                                  <Check className={`${role.accentColor} w-4 h-4 mt-0.5 flex-shrink-0`} />
+                                  {feature}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+
+                          {(role.id === 'patagon' && currentExampleIndexPatagon === 0 || role.id === 'atenea' && currentExampleIndexAtenea === 0) && role.logo && (
+                            <div className="mt-auto pt-6 pb-6 flex justify-center">
+                              <img src={role.logo} alt="Logo" className="w-1/3 h-auto object-contain" />
+                            </div>
+                          )}
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -bottom-10 -right-10 pointer-events-none">
+                  <Zap className={`w-64 h-64 ${role.id === 'atenea' ? 'text-white' : 'text-black'} opacity-5`} />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -621,6 +747,21 @@ export default function Landing() {
           Simular Demo: Toribio Achaval
         </button>
       </div>
+
+      {/* WhatsApp Button */}
+      <a 
+        href="https://wa.me/your_number_here" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-[100] w-14 h-14 rounded-full shadow-xl hover:scale-110 transition-transform overflow-hidden"
+      >
+        <img 
+          src="https://store-images.s-microsoft.com/image/apps.8453.13518859748920827.4d7dd838-9f34-4ad2-9cd7-b861c6398fc1.11cbb3d4-ffd9-42c1-82bd-e3f305d562b1"
+          alt="WhatsApp"
+          className="w-full h-full object-cover"
+          referrerPolicy="no-referrer"
+        />
+      </a>
 
       <style dangerouslySetInnerHTML={{ __html: `
         :root {
