@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CurtainReveal } from '../components/CurtainReveal';
 import ConectaAtenea from '../components/ConectaAtenea';
+import RoadmapPresentation from '../components/RoadmapPresentation';
 
 // Componente para animar texto letra por letra o palabra por palabra
 const RevealText = ({ text, delay = 0, className = "" }: { text: string, delay?: number, className?: string }) => {
@@ -602,6 +603,8 @@ export default function Landing() {
             </div>
         </div>
       </section>
+
+      <RoadmapPresentation />
 
       {/* SECCIÓN SERVICIOS: DISEÑO TIPO REVISTA */}
       <section id="services" className="reveal-on-scroll bg-client-dark py-16 md:py-24 text-white">
