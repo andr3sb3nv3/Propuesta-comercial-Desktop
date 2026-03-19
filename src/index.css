@@ -1,1 +1,45 @@
 @import "tailwindcss";
+
+:root {
+  --bg-deep: #061936;
+  --border: rgba(255, 255, 255, 0.1);
+  --green: #00E676;
+}
+
+.marquee-bar {
+  background: var(--bg-deep);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 22px 0;
+  overflow: hidden;
+}
+
+.marquee-row {
+  display: flex;
+  /* Animación lineal infinita que dura 5 segundos */
+  animation: scroll-l 5s linear infinite;
+}
+
+@keyframes scroll-l {
+  from { transform: translateX(0); }
+  /* Se desplaza exactamente el 50% (la mitad duplicada) para reiniciar sin saltos */
+  to   { transform: translateX(-50%); }
+}
+
+.m-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  padding: 0 32px;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: white;
+}
+
+.m-sep {
+  color: var(--green);
+  opacity: .35;
+}

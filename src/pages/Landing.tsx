@@ -447,19 +447,19 @@ export default function Landing() {
       )}
 
       {/* SECCIÓN 2: EL CONTEXTO CON ANIMACIÓN STAGGERED */}
-      <section className="relative w-full min-h-screen bg-white py-32 flex flex-col justify-center">
-        <div className="container mx-auto px-6 md:px-20 lg:px-32 max-w-6xl">
+      <section className="relative w-full h-screen bg-[#e0e5ec] flex flex-col justify-center overflow-hidden">
+        <div className="container mx-auto px-6 md:px-12 lg:px-24 max-w-6xl">
           <div 
             id="contextTitle" 
-            className={`reveal-on-scroll transition-all duration-1000 mb-24 ${visibleItems.contextTitle ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+            className={`reveal-on-scroll transition-all duration-1000 mb-12 text-center ${visibleItems.contextTitle ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
           >
-            <span className="text-client font-black tracking-[0.5em] uppercase text-sm mb-4 block">El Problema</span>
-            <h2 className="text-6xl md:text-9xl font-black tracking-tighter text-[#0a192f] leading-none italic uppercase">
+            <span className="text-[#34d399] font-black tracking-[0.5em] uppercase text-xs md:text-sm mb-2 block">El Problema</span>
+            <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-[#0a192f] leading-none italic uppercase" style={{ textShadow: '3px 3px 6px #b8c6db, -3px -3px 6px #ffffff' }}>
               Contexto
             </h2>
           </div>
 
-          <div className="space-y-12">
+          <div className="space-y-6 md:space-y-8">
             {[
               { icon: <Timer />, text: "El sector inmobiliario pierde miles de leads por tiempos de respuesta lentos.", highlight: "Responder en 5 minutos convierte 100x más.", id: "ctx1" },
               { icon: <UserX />, text: "Los formularios y chatbots tradicionales destruyen conversión: no califican.", highlight: "No siguen el playbook.", id: "ctx2" },
@@ -468,17 +468,17 @@ export default function Landing() {
               <div 
                 key={item.id}
                 id={item.id}
-                className={`reveal-on-scroll group flex flex-col md:flex-row items-center gap-10 p-10 rounded-[2rem] transition-all duration-1000 border border-transparent hover-border-client hover:bg-gray-50 ${visibleItems[item.id] ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
+                className={`reveal-on-scroll group flex flex-col md:flex-row items-center gap-6 p-6 md:p-8 rounded-[2rem] transition-all duration-1000 bg-[#e0e5ec] shadow-[9px_9px_16px_rgb(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)] hover:shadow-[inset_6px_6px_10px_0_rgba(163,177,198,0.6),inset_-6px_-6px_10px_0_rgba(255,255,255,0.5),0_0_20px_rgba(52,211,153,0.2)] ${visibleItems[item.id] ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
                 style={{ transitionDelay: `${idx * 150}ms` }}
               >
-                <div className="bg-client-dark p-6 rounded-3xl text-client group-hover:scale-110 transition-transform duration-500">
-                  {React.cloneElement(item.icon, { size: 40 })}
+                <div className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full bg-[#e0e5ec] shadow-[5px_5px_10px_rgb(163,177,198,0.6),-5px_-5px_10px_rgba(255,255,255,0.5)] text-[#34d399] group-hover:text-[#0a192f] transition-colors duration-500 shrink-0">
+                  {React.cloneElement(item.icon, { size: 32 })}
                 </div>
                 <div className="flex-1 text-center md:text-left">
-                  <p className="text-2xl md:text-4xl text-gray-500 font-medium uppercase tracking-tighter leading-tight mb-2">
+                  <p className="text-lg md:text-xl text-gray-600 font-medium uppercase tracking-tighter leading-tight mb-1">
                     {item.text}
                   </p>
-                  <p className="text-2xl md:text-4xl text-[#0a192f] font-black uppercase tracking-tighter">
+                  <p className="text-lg md:text-xl text-[#34d399] font-black uppercase tracking-tighter">
                     {item.highlight}
                   </p>
                 </div>
@@ -505,7 +505,7 @@ export default function Landing() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {allianceRoles.map((role) => (
-              <div key={role.id} className={`border border-black/10 rounded-[2rem] p-8 shadow-2xl relative overflow-hidden backdrop-blur-sm ${role.bgColor} ${role.textColor}`}>
+              <div key={role.id} className={`rounded-[2rem] p-8 relative overflow-hidden backdrop-blur-sm ${role.bgColor} ${role.textColor} ${role.id === 'atenea' ? 'shadow-[12px_12px_24px_#050d18,-12px_-12px_24px_#0f2546]' : 'shadow-[12px_12px_24px_#c9b596,-12px_-12px_24px_#fff5cc]'}`}>
                 <div className="space-y-8 relative z-10">
                   <div className="space-y-6">
                     <div className={`inline-block px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest ${role.id === 'atenea' ? 'bg-white/10 text-white/80' : 'bg-black/10 text-black/80'}`}>
@@ -536,7 +536,7 @@ export default function Landing() {
                           dragConstraints={{ left: 0, right: 0 }}
                           onDragEnd={(_, info) => { if (role.examples.length > 1 && info.offset.x < -50) handleNextExample(role.id); }}
                           onClick={() => role.examples.length > 1 && handleNextExample(role.id)}
-                          className={`absolute inset-0 p-8 flex flex-col justify-start cursor-pointer select-none border-2 ${role.id === 'atenea' ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'} rounded-2xl backdrop-blur-md`}
+                          className={`absolute inset-0 p-8 flex flex-col justify-start cursor-pointer select-none rounded-2xl backdrop-blur-md ${role.id === 'atenea' ? 'bg-[#0a192f] shadow-[inset_6px_6px_10px_0_#050d18,inset_-6px_-6px_10px_0_#0f2546]' : 'bg-[#edd5b1] shadow-[inset_6px_6px_10px_0_#c9b596,inset_-6px_-6px_10px_0_#fff5cc]'}`}
                         >
                           <div className="flex items-center justify-between mb-2">
                             <span className={`text-[10px] font-black uppercase tracking-[0.3em] ${role.id === 'atenea' ? 'text-white/40' : 'text-black/40'}`}>
@@ -648,58 +648,60 @@ export default function Landing() {
       </section>
 
       {/* DESGLOSE DE PLANES: INTERACTIVO */}
-      <section id="pricing" className="reveal-on-scroll min-h-screen bg-white py-32">
+      <section id="pricing" className="reveal-on-scroll min-h-screen bg-[#e0e5ec] py-24 flex flex-col justify-center">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-24">
-            <h2 className={`text-5xl md:text-8xl font-black text-[#0a192f] uppercase italic tracking-tighter transition-all duration-1000 ${visibleItems.pricing ? 'scale-100 opacity-100' : 'scale-90 opacity-0'}`}>
+          <div className="text-center mb-20">
+            <h2 className={`text-5xl md:text-7xl font-black text-[#0a192f] uppercase italic tracking-tighter transition-all duration-1000 ${visibleItems.pricing ? 'scale-100 opacity-100' : 'scale-90 opacity-0'}`} style={{ textShadow: '3px 3px 6px #b8c6db, -3px -3px 6px #ffffff' }}>
                 Inversión para {clientName}
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
             {plans.map((plan, idx) => (
               <div
                 key={plan.id}
                 onClick={() => setSelectedPlan(plan.id)}
-                className={`group relative p-12 rounded-[3rem] transition-all duration-700 cursor-pointer border-2 ${
+                className={`group relative p-10 rounded-[3rem] transition-all duration-500 cursor-pointer bg-[#e0e5ec] ${
                   selectedPlan === plan.id 
-                    ? 'bg-client-dark text-white border-client-dark scale-105 shadow-2xl z-10' 
-                    : 'bg-gray-50 text-[#0a192f] border-transparent hover-border-client'
+                    ? 'shadow-[inset_6px_6px_10px_0_rgba(163,177,198,0.6),inset_-6px_-6px_10px_0_rgba(255,255,255,0.5),0_0_20px_rgba(52,211,153,0.3)] scale-105 z-10 border border-[#34d399]/30' 
+                    : 'shadow-[9px_9px_16px_rgb(163,177,198,0.6),-9px_-9px_16px_rgba(255,255,255,0.5)] hover:shadow-[12px_12px_20px_rgb(163,177,198,0.7),-12px_-12px_20px_rgba(255,255,255,0.6)] border border-transparent'
                 }`}
               >
                 {plan.highlight && (
-                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-client text-client-dark px-6 py-2 rounded-full text-[10px] font-black tracking-widest uppercase">
+                    <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-[#e0e5ec] shadow-[4px_4px_8px_rgb(163,177,198,0.6),-4px_-4px_8px_rgba(255,255,255,0.5)] text-[#34d399] px-6 py-2 rounded-full text-[10px] font-black tracking-widest uppercase">
                         Solución Estrella
                     </div>
                 )}
                 
-                <div className="mb-10">
-                    <div className={`w-16 h-16 rounded-2xl mb-6 flex items-center justify-center ${selectedPlan === plan.id ? 'bg-client text-client-dark' : 'bg-client-dark text-client'}`}>
+                <div className="mb-8">
+                    <div className={`w-16 h-16 rounded-2xl mb-6 flex items-center justify-center bg-[#e0e5ec] ${selectedPlan === plan.id ? 'shadow-[inset_4px_4px_8px_rgb(163,177,198,0.6),inset_-4px_-4px_8px_rgba(255,255,255,0.5)] text-[#34d399]' : 'shadow-[5px_5px_10px_rgb(163,177,198,0.6),-5px_-5px_10px_rgba(255,255,255,0.5)] text-gray-500'}`}>
                         {React.cloneElement(plan.icon as React.ReactElement, { size: 24 })}
                     </div>
-                    <h3 className="text-3xl font-black uppercase tracking-tighter italic mb-2">{plan.title}</h3>
-                    <p className={`text-sm font-medium uppercase tracking-widest ${selectedPlan === plan.id ? 'text-white/60' : 'text-gray-400'}`}>
+                    <h3 className="text-3xl font-black uppercase tracking-tighter italic mb-2 text-[#0a192f]">{plan.title}</h3>
+                    <p className={`text-sm font-medium uppercase tracking-widest ${selectedPlan === plan.id ? 'text-[#34d399]' : 'text-gray-400'}`}>
                         {plan.description}
                     </p>
                 </div>
 
-                <div className="mb-10">
-                    <span className="text-6xl font-black tracking-tighter">{plan.price}</span>
-                    <span className={`block text-[10px] font-bold uppercase tracking-widest mt-2 ${selectedPlan === plan.id ? 'text-client' : 'text-gray-500'}`}>
+                <div className="mb-8">
+                    <span className="text-5xl lg:text-6xl font-black tracking-tighter text-[#0a192f]">{plan.price}</span>
+                    <span className={`block text-[10px] font-bold uppercase tracking-widest mt-2 ${selectedPlan === plan.id ? 'text-[#34d399]' : 'text-gray-400'}`}>
                         {plan.unit}
                     </span>
                 </div>
 
-                <div className="space-y-4 mb-12">
+                <div className="space-y-4 mb-10">
                     {plan.features.map((feat, i) => (
                         <div key={i} className="flex items-start gap-3">
-                            <Check size={18} className={selectedPlan === plan.id ? 'text-client' : 'text-client-dark'} />
-                            <span className="text-sm font-bold uppercase tracking-tight leading-tight">{feat}</span>
+                            <div className={`mt-0.5 w-5 h-5 rounded-full flex items-center justify-center bg-[#e0e5ec] ${selectedPlan === plan.id ? 'shadow-[inset_2px_2px_4px_rgb(163,177,198,0.6),inset_-2px_-2px_4px_rgba(255,255,255,0.5)] text-[#34d399]' : 'shadow-[2px_2px_4px_rgb(163,177,198,0.6),-2px_-2px_4px_rgba(255,255,255,0.5)] text-gray-400'}`}>
+                              <Check size={12} strokeWidth={3} />
+                            </div>
+                            <span className="text-sm font-bold uppercase tracking-tight leading-tight text-gray-600">{feat}</span>
                         </div>
                     ))}
                 </div>
 
-                <button className={`w-full py-5 rounded-2xl font-black uppercase tracking-widest transition-all ${selectedPlan === plan.id ? 'bg-client text-client-dark' : 'bg-client-dark text-white hover-bg-client hover-text-client-dark'}`}>
+                <button className={`w-full py-4 rounded-2xl font-black uppercase tracking-widest transition-all bg-[#e0e5ec] ${selectedPlan === plan.id ? 'shadow-[inset_4px_4px_8px_rgb(163,177,198,0.6),inset_-4px_-4px_8px_rgba(255,255,255,0.5)] text-[#34d399]' : 'shadow-[5px_5px_10px_rgb(163,177,198,0.6),-5px_-5px_10px_rgba(255,255,255,0.5)] text-gray-500 hover:text-[#34d399]'}`}>
                     {selectedPlan === plan.id ? 'Seleccionado' : 'Seleccionar'}
                 </button>
               </div>
@@ -707,6 +709,31 @@ export default function Landing() {
           </div>
         </div>
       </section>
+
+      <div className="marquee-bar">
+        <div className="marquee-row">
+          {/* Se duplica el array para crear el efecto de scroll infinito sin cortes */}
+          {[...Array(2)].map((_, i) => (
+            <React.Fragment key={i}>
+              {[
+                "Meta Ads", 
+                "Google Ads", 
+                "Mercado Libre Ads", 
+                "TikTok Ads", 
+                "Performance Marketing", 
+                "ROAS Optimization", 
+                "Full-Funnel Attribution", 
+                "Creative Testing"
+              ].map((item) => (
+                <span key={item} className="m-item">
+                  {item}
+                  <span className="m-sep">✦</span>
+                </span>
+              ))}
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
 
       {/* FOOTER */}
       <footer className="w-full bg-gray-50 py-20 border-t border-gray-100">
