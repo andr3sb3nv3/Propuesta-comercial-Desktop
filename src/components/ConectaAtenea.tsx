@@ -43,8 +43,8 @@ const ConectaAtenea = () => {
                   aria-label={item.label}
                   className="w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-[#e0e5ec] rounded-xl md:rounded-2xl flex items-center justify-center text-[#16E077] transition-all duration-300
                              shadow-[4px_4px_8px_#b8b9be,-4px_-4px_8px_#ffffff] md:shadow-[8px_8px_16px_#b8b9be,-8px_-8px_16px_#ffffff] 
-                             hover:shadow-[inset_2px_2px_4px_#b8b9be,inset_-2px_-2px_4px_#ffffff] md:hover:shadow-[inset_4px_4px_8px_#b8b9be,inset_-4px_-4px_8px_#ffffff]
-                             hover:scale-95 group"
+                             hover:shadow-[inset_4px_4px_8px_#b8b9be,inset_-4px_-4px_8px_#ffffff] md:hover:shadow-[inset_8px_8px_16px_#b8b9be,inset_-8px_-8px_16px_#ffffff]
+                             hover:scale-95 hover:translate-y-0.5 active:scale-90 group"
                 >
                   <item.icon className="w-5 h-5 sm:w-7 sm:h-7 md:w-8 md:h-8" strokeWidth={2.5} />
                 </a>

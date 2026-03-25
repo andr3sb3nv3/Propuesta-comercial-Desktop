@@ -240,7 +240,7 @@ export default function Landing() {
         footerClassName="bg-white"
         containerClassName="bg-white"
       >
-        <div className="w-full min-h-screen font-sans text-[#0a192f] overflow-x-hidden selection:bg-client selection:text-client-dark">
+        <div className="w-full min-h-screen font-sans text-[#0a192f] selection:bg-client selection:text-client-dark">
       
       {/* SECCIÓN 1: HERO CON EFECTO REVEAL */}
       <section className="relative w-full h-screen flex items-center overflow-hidden bg-[#0a192f]">
@@ -274,10 +274,13 @@ export default function Landing() {
           </div>
         </div>
         
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 animate-bounce flex flex-col items-center gap-2">
-          <span className="text-[10px] tracking-[0.5em] uppercase font-bold">Scroll</span>
+        <button 
+          onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 hover:text-white transition-colors flex flex-col items-center gap-2"
+        >
+          <span className="text-[10px] tracking-[0.5em] uppercase font-bold">Enviar mensaje</span>
           <ChevronDown size={24} />
-        </div>
+        </button>
       </section>
 
       {/* CUSTOM DATA SECTION (If present) */}
@@ -308,7 +311,7 @@ export default function Landing() {
             
             {/* Moving Geometric Elements */}
             <div 
-              className="absolute w-[900px] h-[900px] border-[2px] border-dashed rounded-full opacity-30 transition-transform duration-300 ease-out"
+              className="absolute w-[900px] h-[900px] border-[2px] border-dashed rounded-full opacity-30"
               style={{ 
                 borderColor: customColor1,
                 left: '-25%',
@@ -317,7 +320,7 @@ export default function Landing() {
               }}
             />
             <div 
-              className="absolute w-[700px] h-[700px] border-[2px] opacity-30 transition-transform duration-300 ease-out"
+              className="absolute w-[700px] h-[700px] border-[2px] opacity-30"
               style={{ 
                 borderColor: customColor2,
                 right: '-15%',
@@ -328,7 +331,7 @@ export default function Landing() {
             
             {/* Solid accent shapes that shift with scroll */}
             <div 
-              className="absolute w-56 h-56 opacity-[0.25] transition-transform duration-500 ease-out"
+              className="absolute w-56 h-56 opacity-[0.25]"
               style={{ 
                 backgroundColor: customColor1,
                 left: '5%',
@@ -337,7 +340,7 @@ export default function Landing() {
               }}
             />
             <div 
-              className="absolute w-48 h-48 rounded-full opacity-[0.25] transition-transform duration-500 ease-out"
+              className="absolute w-48 h-48 rounded-full opacity-[0.25]"
               style={{ 
                 backgroundColor: customColor2,
                 right: '10%',
@@ -348,7 +351,7 @@ export default function Landing() {
 
             {/* Additional Shapes */}
             <div 
-              className="absolute w-40 h-40 opacity-[0.2] transition-transform duration-700 ease-out"
+              className="absolute w-40 h-40 opacity-[0.2]"
               style={{ 
                 border: `6px solid ${customColor1}`,
                 left: '35%',
@@ -357,7 +360,7 @@ export default function Landing() {
               }}
             />
             <div 
-              className="absolute w-0 h-0 opacity-[0.25] transition-transform duration-500 ease-out"
+              className="absolute w-0 h-0 opacity-[0.25]"
               style={{ 
                 borderLeft: '60px solid transparent',
                 borderRight: '60px solid transparent',
@@ -372,7 +375,7 @@ export default function Landing() {
             {[...Array(6)].map((_, i) => (
               <div 
                 key={`particle-${i}`}
-                className="absolute opacity-30 transition-transform duration-1000 ease-out"
+                className="absolute opacity-30"
                 style={{
                   width: i % 2 === 0 ? '12px' : '20px',
                   height: i % 2 === 0 ? '12px' : '20px',
@@ -488,12 +491,12 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* SECCIONES DE IMAGEN CON PARALLAX */}
-      <section id="img96" className="reveal-on-scroll w-full overflow-hidden bg-black">
+      {/* SECCIONES DE IMAGEN */}
+      <section className="w-full bg-black">
         <img 
             src={images.img0096} 
             alt="Data" 
-            className={`w-full h-auto transition-transform duration-[2000ms] ease-out ${visibleItems.img96 ? 'scale-100 opacity-100' : 'scale-125 opacity-0'}`} 
+            className="w-full h-auto block" 
         />
       </section>
 
@@ -604,7 +607,7 @@ export default function Landing() {
         </div>
       </section>
 
-      <RoadmapPresentation />
+      <RoadmapPresentation clientName={clientName} color1={customColor1} color2={customColor2} />
 
       {/* SECCIÓN SERVICIOS: DISEÑO TIPO REVISTA */}
       <section id="services" className="reveal-on-scroll bg-client-dark py-16 md:py-24 text-white">
@@ -735,23 +738,6 @@ export default function Landing() {
         </div>
       </div>
 
-      {/* FOOTER */}
-      <footer className="w-full bg-gray-50 py-20 border-t border-gray-100">
-        <div className="container mx-auto px-8 md:px-20 flex flex-col md:flex-row justify-between items-center text-[10px] uppercase tracking-[0.4em] text-gray-400 font-black">
-          <div className="flex items-center gap-4 mb-8 md:mb-0">
-             <div className="w-10 h-10 bg-client-dark flex items-center justify-center rounded-lg text-client font-black">A</div>
-             <span>Atenea Growth Marketing ✕ {clientName} © 2024</span>
-          </div>
-          <div className="flex gap-12">
-            <span className="hover:text-black cursor-pointer transition-colors">Estrategia</span>
-            <span className="hover:text-black cursor-pointer transition-colors">Patagon AI</span>
-            <Link to="/create-proposal" className="hover:text-emerald-500 cursor-pointer transition-colors">Propuesta comercial 2024</Link>
-          </div>
-        </div>
-      </footer>
-      
-      {/* Espacio para que la revelación sea fluida */}
-      <div className="h-32 bg-[#0a192f]" />
       
       </div>
       </CurtainReveal>

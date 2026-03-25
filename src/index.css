@@ -6,6 +6,10 @@
   --green: #00E676;
 }
 
+body {
+  overflow-x: clip;
+}
+
 .marquee-bar {
   background: var(--bg-deep);
   border-top: 1px solid var(--border);
